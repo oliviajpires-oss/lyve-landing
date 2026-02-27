@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lyve — Where Artists Get Booked</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A12;
+      --surface: #13131F;
+      --violet: #7C3AED;
+      --violet-light: #9F67FF;
+      --violet-glow: rgba(124, 58, 237, 0.3);
+      --white: #FFFFFF;
+      --grey: #9CA3AF;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--violet-light);
+    }
+
+    .nav-cta {
+      background: var(--violet);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover { background: var(--violet-light); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--violet-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      color: var(--violet-light);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 32px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--violet-light);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--violet-light), #C084FC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--grey);
+      max-width: 560px;
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 64px;
+    }
+
+    .btn-primary {
+      background: var(--violet);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--violet-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--violet-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--violet);
+      color: var(--violet-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--grey);
+      margin-top: 4px;
+    }
+
+    /* HOW IT WORKS */
+    section {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--violet-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 18px;
+      color: var(--grey);
+      max-width: 520px;
+      margin-bottom: 64px;
+    }
+
+    /* SPLIT CARDS */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 100px;
+    }
+
+    @media (max-width: 768px) {
+      .split { grid-template-columns: 1fr; }
+      nav { padding: 20px 24px; }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      transition: border-color 0.3s;
+    }
+
+    .card:hover { border-color: rgba(124, 58, 237, 0.4); }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--grey);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .card ul {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .card ul li {
+      color: var(--grey);
+      font-size: 14px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card ul li:last-child { border-bottom: none; }
+
+    .card ul li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--violet-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* STEPS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+
+    .step {
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--violet-glow);
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--violet-light);
+      margin: 0 auto 20px;
+    }
+
+    .step h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: var(--grey);
+      font-size: 14px;
+    }
+
+    /* WAITLIST */
+    .waitlist-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 80px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto 100px;
+    }
+
+    .waitlist-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, var(--violet-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .waitlist-section h2 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .waitlist-section p {
+      color: var(--grey);
+      font-size: 17px;
+      margin-bottom: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .waitlist-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .waitlist-form input:focus { border-color: var(--violet); }
+    .waitlist-form input::placeholder { color: var(--grey); }
+
+    .waitlist-form button {
+      background: var(--violet);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .waitlist-form button:hover {
+      background: var(--violet-light);
+      transform: translateY(-1px);
+    }
+
+    .waitlist-toggle {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .toggle-btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--grey);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+      background: var(--violet);
+      border-color: var(--violet);
+      color: white;
+    }
+
+    .waitlist-note {
+      font-size: 13px;
+      color: var(--grey);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      max-width: 100%;
+    }
+
+    footer .logo { font-size: 18px; }
+
+    footer p {
+      font-size: 13px;
+      color: var(--grey);
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">LY<span>V</span>E</div>
+    <a href="#waitlist" class="nav-cta">Join the Waitlist</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Now accepting founding members</div>
+    <h1>Where artists get booked.<br/><span class="accent">And the world finds out.</span></h1>
+    <p>Lyve is the AI-powered platform that connects DJs and live talent with the venues that need them — and handles all the content automatically.</p>
+    <div class="hero-ctas">
+      <a href="#waitlist" class="btn-primary">🎧 I'm an Artist</a>
+      <a href="#waitlist" class="btn-secondary">🏟️ I'm a Venue</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">AI-Matched</div>
+        <div class="stat-label">By vibe, genre & energy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Auto-Generated</div>
+        <div class="stat-label">Content after every show</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Zero Guesswork</div>
+        <div class="stat-label">Calendar sync & smart booking</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="section-label">How It Works</div>
+    <div class="section-title">Built for both sides<br/>of every show.</div>
+    <p class="section-sub">One platform. Two powerful experiences. Whether you're the talent or the venue.</p>
+
+    <div class="split">
+      <div class="card">
+        <div class="card-icon">🎧</div>
+        <h3>For Artists & DJs</h3>
+        <p>Upload your press kit once. Get discovered, get booked, and get your content automatically — every single show.</p>
+        <ul>
+          <li>AI-generated highlight reels from your sets</li>
+          <li>Professional press kit built from your profile</li>
+          <li>Smart calendar syncs your availability</li>
+          <li>Get matched to venues that fit your sound</li>
+          <li>Performance analytics across every booking</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏟️</div>
+        <h3>For Venues</h3>
+        <p>Stop guessing. Find artists who match your room's energy — and automatically get content that proves it.</p>
+        <ul>
+          <li>AI vibe-matching by genre, energy & crowd type</li>
+          <li>Browse artists available on your exact date</li>
+          <li>Automatic event recap content after every show</li>
+          <li>Booking performance data to make smarter decisions</li>
+          <li>Direct booking with no middleman</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <div style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 24px;">
+    <section style="padding: 0;">
+      <div style="text-align: center; margin-bottom: 64px;">
+        <div class="section-label">The Process</div>
+        <div class="section-title">From upload to booked<br/>in three steps.</div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h4>Build Your Profile</h4>
+          <p>Upload your press kit, set your vibe, sync your calendar. Lyve does the rest.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h4>Get Matched & Booked</h4>
+          <p>AI surfaces the right opportunities. You confirm. Booking handled.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h4>Content Ships Automatically</h4>
+          <p>Upload the footage. Both sides get their own content package. Done.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- WAITLIST -->
+  <div id="waitlist" style="padding: 100px 24px;">
+    <div class="waitlist-section">
+      <div class="section-label" style="margin-bottom: 16px;">Early Access</div>
+      <h2>Be the first on Lyve.</h2>
+      <p>We're onboarding founding artists and venues now. Get in early and shape the platform.</p>
+
+      <div class="waitlist-toggle">
+        <button class="toggle-btn active" onclick="setType('artist', this)">🎧 Artist / DJ</button>
+        <button class="toggle-btn" onclick="setType('venue', this)">🏟️ Venue</button>
+      </div>
+
+      <form class="waitlist-form" action="https://formspree.io/f/YOURFORMID" method="POST">
+        <input type="hidden" name="type" id="type-input" value="artist" />
+        <input type="email" name="email" placeholder="Enter your email" required />
+        <button type="submit">Join Waitlist</button>
+      </form>
+      <p class="waitlist-note">No spam. No credit card. Just early access. 🎯</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="divider"></div>
+  <footer>
+    <div class="logo">LY<span style="color: var(--violet-light);">V</span>E</div>
+    <p>© 2026 Lyve. All rights reserved.</p>
+    <p style="color: var(--grey); font-size: 13px;">getlyve.ai</p>
+  </footer>
+
+  <script>
+    function setType(type, btn) {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('type-input').value = type;
+    }
+  </script>
+
+</body>
+</html>
